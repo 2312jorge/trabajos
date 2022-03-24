@@ -1,0 +1,123 @@
+import java.sql.*;
+import sqlj.runtime.*;
+import sqlj.runtime.ref.*;
+
+#sql iterator App_Cursor1 (String empno, String firstnme) ; // 1
+#sql iterator App_Cursor2 (String) ;
+
+class App
+{
+
+  /**********************
+   **  Controlador de registro **
+   **********************/
+
+ static
+ {
+   try
+   {
+     Class.forName("com.ibm.db2.jdbc.app.DB2Driver").newInstance();
+   }
+   catch (Exception e)
+   {
+     e.printStackTrace();
+   }
+ }
+
+  /********************
+   **      Main      **
+   ********************/
+
+ public static void main(String argv[])
+ {
+   try
+   {
+     App_Cursor1 cursor1;
+     App_Cursor2 cursor2;
+
+     String str1 = null;
+     String str2 = null;
+     long   count1;
+
+     // El URL es jdbc:db2:nombredb
+     String url = "jdbc:db2:sample";
+
+     DefaultContext ctx = DefaultContext.getDefaultContext();
+     if (ctx == null)
+     {
+       try
+       {
+         // Conectar con id/contraseña predeterminados.
+         Connection con = DriverManager.getConnection(url);
+         con.setAutoCommit(false);
+         ctx = new DefaultContext(con);
+       }
+       catch (SQLException e)
+       {
+         System.out.println("Error: no se ha podido obtener un contexto predeterminado");
+         System.err.println(e) ;
+         System.exit(1);
+       }
+       DefaultContext.setDefaultContext(ctx);
+     }
+
+     // Recuperar datos de la base de datos.
+     System.out.println("Recuperar algunos datos de la base de datos.");
+     #sql cursor1 = {SELECT empno, firstnme FROM employee}; // 2
+
+     // Visualizar el conjunto de resultados.
+     // cursor1.next() devuelve false cuando no hay más filas.
+     System.out.println("Resultados recibidos:");
+     while (cursor1.next()) // 3
+     {
+       str1 = cursor1.empno(); // 4
+       str2 = cursor1.firstnme();
+
+       System.out.print (" empno= " + str1);
+       System.out.print (" firstname= " + str2);
+       System.out.println("");
+     }
+     cursor1.close(); // 9
+
+     // Recuperar el número de empleado de la base de datos.
+     #sql { SELECT count(*) into :count1 FROM employee }; // 5
+     if (1 == count1)
+       System.out.println ("Hay una fila en la tabla de empleados");
+     else
+       System.out.println ("Hay " + count1
+                            + " filas en la tabla de empleados");
+
+     // Actualizar la base de datos.
+     System.out.println("Actualizar la base de datos.");
+     #sql { UPDATE employee SET firstnme = 'SHILI' WHERE empno = '000010' };
+
+     // Recuperar los datos actualizados de la base de datos.
+     System.out.println("Recuperar los datos actualizados de la base de datos.");
+     str1 = "000010";
+     #sql cursor2 = {SELECT firstnme FROM employee WHERE empno = :str1}; // 6
+
+     // Visualizar el conjunto de resultados.
+     // cursor2.next() devuelve false cuando no hay más filas.
+     System.out.println("Resultados recibidos:");
+     while (true)
+     {
+       #sql { FETCH :cursor2 INTO :str2 }; // 7
+       if (cursor2.endFetch()) break; // 8
+
+       System.out.print (" empno= " + str1);
+       System.out.print (" firstname= " + str2);
+       System.out.println("");
+     }
+     cursor2.close(); // 9
+
+     // Retrotraer la actualización.
+     System.out.println("Retrotraer la actualización.");
+     #sql { ROLLBACK work };
+     System.out.println("Retrotracción terminada.");
+   }
+   catch( Exception e )
+   {
+     e.printStackTrace();
+   }
+ }
+}
