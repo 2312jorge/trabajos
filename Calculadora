@@ -1,0 +1,73 @@
+
+package menu.calbasic;
+import java.util.*;
+
+public class MenuCalbasic {
+
+    
+    public static void main(String[] args) {
+    Scanner sc=new Scanner (System.in);
+    int op;
+    int j ;
+    int k ;    
+    int a,b,c,d,e;
+  
+    System.out.println("1._la suma es:\n2._la resta es:\n3._la multiplicacion es:\n4._la divicion es:\n5._el modulo es:\n6._salir");
+    op=sc.nextInt();
+    switch (op){
+        case 1:
+        System.out.println("Dame el primer numero\n");       
+        j=sc.nextInt();
+        System.out.println("Dame el segundo numero\n");
+        k=sc.nextInt();
+        a= j + k;
+         System.out.println("El valor de suma es: \t" +a);
+         break;
+       case 2:
+        System.out.println("Dame el primer numero\n");       
+        j=sc.nextInt();
+        System.out.println("Dame el segundo numero\n");
+        k=sc.nextInt();
+        b= j - k;
+         System.out.println("El valor de la resta es: \t" +b);
+         break;
+          case 3:
+        System.out.println("Dame el primer numero\n");       
+        j=sc.nextInt();
+        System.out.println("Dame el segundo numero\n");
+        k=sc.nextInt();
+        c= j * k;
+         System.out.println("El valor de la multiplicacion es: \t" +c);
+         break;
+          case 4:
+        System.out.println("Dame el primer numero\n");       
+        j=sc.nextInt();
+        System.out.println("Dame el segundo numero\n");
+        k=sc.nextInt();
+        d= j / k;
+         System.out.println("El valor de la divicion es: \t" +d);
+        
+         break;
+          case 5:
+        System.out.println("Dame el primer numero\n");       
+        j=sc.nextInt();
+        System.out.println("Dame el segundo numero\n");
+        k=sc.nextInt();
+        e= j % k;
+         System.out.println("El valor del modulo es: \t" +e);
+         break;
+          case 6:
+              System.exit(0);
+              break;
+          default:
+              System.out.println("opcion invalida");
+              break;
+      
+      
+      
+      
+    }
+    }
+    
+    
+}
