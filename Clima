@@ -1,0 +1,32 @@
+package cli.ma;
+
+import java.util.*;
+
+public class CliMa {
+
+    
+    public static void main(String[] args) {
+     double TP;
+      Scanner sc=new Scanner(System.in);
+        System.out.println("Ingresa la temperatura en grados centigrados");
+        TP=sc.nextDouble();
+        if(TP <=10)
+        {
+            System.out.println("El clima es frio");
+        }
+        else if (10<TP && TP<=20)
+        {
+            System.out.println("El clima es nublado");
+        }
+        else if (20<TP && TP<=30)
+        {
+            System.out.println("El clima es caluroso");
+        }
+        else if (TP>30)
+        {       
+            System.out.println("El clima es tropical");
+        }package cli.ma;
+
+    }
+    
+}
