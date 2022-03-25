@@ -1,0 +1,23 @@
+package trabajo;
+
+
+public class calbasica {
+
+   
+    public static void main(String[] args) {
+    int j = 10;
+    int k = 20;    
+    int a,b,c,d,e;
+    a = j + k;
+    b = j - k;
+    c = j * k;
+    d = k / j;
+    e = j % k;
+        System.out.println("El valor de suma es: \t" +a);
+        System.out.println("El valor de resta es: \t" +b);
+        System.out.println("El valor de multiplicacion es: \t" +c);
+        System.out.println("El valor de divicion es: \t" +d);
+        System.out.println("El valor de modulo es: \t" +e);
+    }
+    
+}
